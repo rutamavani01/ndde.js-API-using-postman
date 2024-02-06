@@ -1,16 +1,27 @@
+const jwt = require('jsonwebtoken');
+
 const token = (req,res,next) => {
+    const token = req.headers.authorization.split(' ')[1]; 
 
-    const token = req.headers.authorization;
+   jwt.verify(token,'API',(err,decoded)=>{
+    if(err){
+        return res.status(403).json({message : 'token not valid'})
+    }
+    req.user = decoded;
+    next();
+   })
+}
 
-    if(!token) {
-        return res.status(200).send({
-            success : false,
-            message : "token is blank"
-        })
-    }   
-    return res.send(token);
+const adminRole = (role) => {
+    return (req,res,next) =>{
+        if(req.user.user.role === "admin"){
+            next();
+        }else{
+            res.status(403).json({message : 'Access denied'});   
+        }
+    }
 }
 
 module.exports = {
-    token
+    token , adminRole
 }

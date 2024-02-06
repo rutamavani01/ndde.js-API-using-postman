@@ -5,16 +5,12 @@ const jwt = require('jsonwebtoken');
 const login = async(req,res)=> {
     try {
         let user = await userModel.findOne({email : req.body.email});
-
-        // console.log(user);
-        // console.log(req.body.password);
-
         if(!user || user.password != req.body.password){
             return res.status(200).send({
                 success : true,
                 message : "Email and password are not match"
             })   
-        }   
+        }      
 
         let token = jwt.sign({user : user},"API",{expiresIn : '24hr'});
         return res.status(200).send({
