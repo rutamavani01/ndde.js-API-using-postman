@@ -39,6 +39,20 @@ const category_view = async(req,res) => {
     }
 }
 
+const category_delete = async(req,res) => {
+    try {
+        let deleteCategory = await categoryModel.findByIdAndDelete(req.query.id);
+
+        return res.status(200).send({
+            success : true,
+            message : "category deleted successfully"
+        })
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
 module.exports = {
-    category_add , category_view
+    category_add , category_view , category_delete
 }

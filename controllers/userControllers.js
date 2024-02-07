@@ -29,7 +29,8 @@ const registerUser = async(req,res) => {
        let user = await userModel.create({
             name : req.body.name,
             email : req.body.email,
-            password : req.body.password
+            password : req.body.password,
+            role : req.body.role
        });
        return res.status(200).send({
         success : true,
