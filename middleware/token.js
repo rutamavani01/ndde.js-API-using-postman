@@ -27,29 +27,25 @@ const token = (req,res,next) => {
 const adminRole = (role) => {
     return (req,res,next) =>{
         // role[0] => admin || role [1] => manager
-        if(req.user.user.role ==  role[0] || req.user.user.role == role[1]){
-           return next();
-        }else{
-            res.status(403).send({
-                success : false,
-                message : 'Access denied'
-            });   
-        }
-    }
-}
+        // if(req.user.user.role ==  role[0] || req.user.user.role == role[1]){
+        //    return next();
+        // }else{
+        //     res.status(403).send({
+        //         success : false,
+        //         message : 'Access denied'
+        //     });   
+        // }
 
-const managerRole = (role) => {
-    return (req,res,next) => {
-        if (req.user.user.role !== "manager") {
-            res.status(400).send({
-                success : false,
-                message : "only manager can access this"
-            })
+        if(req.user && role.includes(req.user.user.role)){
+            return next();
         }
-        next();
+        res.status(400).send({
+            success : false,
+            message : "Acces denied by admin"
+        })
     }
 }
 
 module.exports = {
-    token , adminRole , managerRole
+    token , adminRole
 }

@@ -2,7 +2,7 @@ const express = require('express');
 
 const routes = express.Router();
 
-const {token,adminRole,managerRole} = require('../middleware/token');
+const {token,adminRole} = require('../middleware/token');
 
 // controllers
 const userControllers = require('../controllers/userControllers');
