@@ -27,7 +27,7 @@ const category_add = async(req,res) => {
 
 const category_view = async(req,res) => {
     try {
-        let view = await categoryModel.find({});
+        let view = await categoryModel.find({status : 1});
         return res.status(200).send({
             success : true,
             message : "category fetch",
@@ -53,6 +53,72 @@ const category_delete = async(req,res) => {
     }
 }
 
+const category_update = async(req,res) => {
+    try {
+        const id = req.query.id;
+        let update = await categoryModel.findByIdAndUpdate(id,{
+            categoryName : req.body.categoryName
+        });
+        return res.status(200).send({
+            success : true,
+            message : "Category Succesfully Updated!"
+        })
+      
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+} 
+  
+// category active & deactive
+const category_active = async(req,res) => {
+    try{
+        let id = req.query.id;
+        let status = req.body.status;
+        let updateStatus = await categoryModel.findByIdAndUpdate(id,{
+            status  : status
+        })
+        if(status == 0){
+            return res.status(200).send({
+                success : true,
+                message : "deactivated catgory"
+            })
+        }else if(status ==1){
+            return res.status(200).send({
+                success : true,
+                message : "active category"
+            })
+        }else{
+            return res.status(200).send({
+                success : true,
+                message : "Invalid status! Make sure the status is correct?"
+            })
+        }
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
+
+//category active or deactive only admin can see this!
+
+const adminCategory_view = async(req,res) => {
+    try{
+        let category = await categoryModel.find({status : 1});
+        let categoryinactive = await categoryModel.find({status : 0});
+
+        return res.status(200).send({
+            success : true,
+            message : "category fetch",
+            category,
+            inactive : categoryinactive
+        })
+    }catch(err){
+        console.log(err);
+        return false;
+    }
+}
+
 module.exports = {
-    category_add , category_view , category_delete
+    category_add , category_view , category_delete , category_update ,category_active , adminCategory_view
 }

@@ -4,6 +4,10 @@ const categorySchema = mongoose.Schema({
     categoryName : {
         type : String,
         require : true
+    },
+    status : {
+        type : String,
+        defaul : 1
     }
 })
 
