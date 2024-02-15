@@ -4,13 +4,16 @@ const jwt = require('jsonwebtoken');
 
 const login = async(req,res)=> {
     try {
+        // let hash = await bcrypt.hash(password,10);        l
         let user = await userModel.findOne({email : req.body.email});
         if(!user || user.password != req.body.password){
             return res.status(200).send({
                 success : true,
                 message : "Email and password are not match"
             })   
-        }      
+        }  
+        
+        // let match = await bcrypt.compare(password, user.password);
 
         let token = jwt.sign({user : user},"API",{expiresIn : '24hr'});
         return res.status(200).send({

@@ -6,7 +6,7 @@ const ex_subcat_add = async(req,res) => {
     console.log(req.body.extrasubcategoryName);
     let dup_ex_subcate = await extraSubCategoryModel.findOne({extrasubcategoryName : req.body.extrasubcategoryName});
 
-    if(dup_ex_subcate){
+    if(dup_ex_subcate){ 
         return res.status(200).send({
             success : true,
             message : 'extra subcategory already added!'

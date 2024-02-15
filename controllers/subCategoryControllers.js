@@ -4,7 +4,7 @@ const subCategoryModel = require('../models/subCategoryModel');
 const subcat_add = async(req,res) => {
     try {
         let dup_subcate = await subCategoryModel.findOne({subcategoryName : req.body.subcategoryName});
-        console.log(dup_subcate);
+    
         if(dup_subcate){
             return res.status(200).send({
                 success : true,
@@ -12,13 +12,11 @@ const subcat_add = async(req,res) => {
             })
         }
 
-        let category = await categoryModel.find({});
-        
         let subcategory = await subCategoryModel.create({
             categoryId : req.query.id,
             subcategoryName : req.body.subcategoryName
         })
-
+    
         return res.status(200).send({
             success : true,
             message : "subcategory added",
@@ -32,7 +30,7 @@ const subcat_add = async(req,res) => {
 
 const subcat_view = async(req,res) => {
     try {
-        let subCategoryView = await subCategoryModel.find({}).populate('categoryId');
+        let subCategoryView = await subCategoryModel.find({status : 1}).populate('categoryId');
         return res.status(200).send({
             success : true,
             message : "subcategory view",
@@ -76,6 +74,11 @@ const subcate_update = async(req,res) => {
     }
 }
 
+// subcategory active/deactive
+const subcat_active = (req,res) => {
+
+}
+
 module.exports = ({
-    subcat_add , subcat_view , subcat_delete , subcate_update
+    subcat_add , subcat_view , subcat_delete , subcate_update , subcat_active
 })

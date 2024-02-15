@@ -8,6 +8,10 @@ const subcategoryschema = mongoose.Schema({
     subcategoryName : {
         type : String,
         require : true
+    },
+    status : {
+        type : String,
+        default : 1
     }
 })
 

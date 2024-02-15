@@ -100,7 +100,7 @@ const category_active = async(req,res) => {
     }
 }
 
-//category active or deactive only admin can see this!
+// only admin can see this (whole data)!
 
 const adminCategory_view = async(req,res) => {
     try{
