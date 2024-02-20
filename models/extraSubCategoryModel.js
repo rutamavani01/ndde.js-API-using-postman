@@ -12,6 +12,10 @@ const extraSubCategorySchema = ({
     extrasubcategoryName : {
         type : String,
         require : true
+    },
+    status : {
+        type : String,
+        default : 1
     }
 })
 

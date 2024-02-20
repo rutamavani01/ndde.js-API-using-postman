@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const productSchema = mongoose.Schema({
+const addToCartSchema = mongoose.Schema({
     name : {
         type : String,
         require : true
@@ -29,16 +29,12 @@ const productSchema = mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : "categoryModel"
     },
-    subcategoryId : {
+    userId : {
         type : mongoose.Schema.Types.ObjectId,
-        ref : "subCategoryModel"
-    },
-    extrasubcategoryId : {
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "extraSubCategoryModel"
+        ref : "userModel"
     }
 })
 
-const productModel = mongoose.model('productModel',productSchema);
+const addToCartModel = mongoose.model('addToCartModel',addToCartSchema);
 
-module.exports = productModel;
+module.exports = addToCartModel;

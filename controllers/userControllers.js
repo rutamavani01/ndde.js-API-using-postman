@@ -45,7 +45,33 @@ const registerUser = async(req,res) => {
         return false;
     }
 }
+
+const changePassword = async(req,res) => {
+    const { name, oldPassword, newPassword } = req.body;
+    try {
+        let user = await userModel.findOne({ name });
+
+        if (!user || user.password !== oldPassword) {
+            return res.status(401).send({
+                success: false,
+                message: 'Invalid username or incorrect oldpassword'
+            });
+        }
+
+        user.password = newPassword;    
+        await user.save();
+
+        return res.send({
+            success: true,
+            message: 'Password changed successfully'
+        });
+        
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
   
 module.exports = {    
-    registerUser, login
+    registerUser, login , changePassword
 }  

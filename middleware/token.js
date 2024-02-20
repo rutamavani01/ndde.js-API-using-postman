@@ -11,7 +11,7 @@ const token = (req,res,next) => {
     }
 
     var doneToken = token.split(' ')[1];
-
+// API=>secret key
    jwt.verify(doneToken,'API',(err,decoded)=>{
     if(err){
         return res.status(403).send({
@@ -27,6 +27,7 @@ const token = (req,res,next) => {
 const adminRole = (role) => {
     return (req,res,next) =>{
         // role[0] => admin || role [1] => manager
+        
         // if(req.user.user.role ==  role[0] || req.user.user.role == role[1]){
         //    return next();
         // }else{

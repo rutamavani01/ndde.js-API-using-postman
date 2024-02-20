@@ -2,6 +2,7 @@ const categoryModel = require('../models/categoryModel');
 
 const category_add = async(req,res) => {
    try {
+    // duplicate category
     let duplicate_category =await categoryModel.findOne({categoryName : req.body.categoryName});
 
     if(duplicate_category){
@@ -24,7 +25,7 @@ const category_add = async(req,res) => {
     return false;
    }
 }       
-
+//only status : 1(activate category) is show
 const category_view = async(req,res) => {
     try {
         let view = await categoryModel.find({status : 1});
@@ -72,7 +73,7 @@ const category_update = async(req,res) => {
   
 // category active & deactive
 const category_active = async(req,res) => {
-    try{
+    try{  
         let id = req.query.id;
         let status = req.body.status;
         let updateStatus = await categoryModel.findByIdAndUpdate(id,{
@@ -91,7 +92,7 @@ const category_active = async(req,res) => {
         }else{
             return res.status(200).send({
                 success : true,
-                message : "Invalid status! Make sure the status is correct?"
+                message : "Invalid choice!! use 1 for status actived and 0 for deactivated"
             })
         }
     }catch(err){
@@ -101,7 +102,6 @@ const category_active = async(req,res) => {
 }
 
 // only admin can see this (whole data)!
-
 const adminCategory_view = async(req,res) => {
     try{
         let category = await categoryModel.find({status : 1});
